@@ -65,15 +65,15 @@ class MealViewSet(viewsets.ModelViewSet):
                 }
                 return Response(json , status=status.HTTP_400_BAD_REQUEST)
 
-            except:
-                # create if the rate not exist 
+            except Rating.DoesNotExist:
+                # create if the rate not exist
                 rating = Rating.objects.create(stars=stars, meal=meal, user=user)
                 serializer = RatingSerializer(rating, many=False)
                 json = {
                     'message': 'Meal Rate Created',
                     'result': serializer.data
                 }
-                return Response(json , status=status.HTTP_200_OK)
+                return Response(json, status=status.HTTP_200_OK)
 
         else:
             json = {
